@@ -23,28 +23,38 @@ GPIO_D_CLR          equ (GPIOD_BASE + 0x1A)
     
 
 ;* We need minimal memory setup of InRootSection placed in Code Section
-    AREA  |.text|, CODE, READONLY, ALIGN = 3
-    ALIGN
+   AREA |.text|, CODE, READONLY, ALIGN = 3
+   ALIGN
+
 main
-    BL initITSboard             ; needed by the board to setup
-    nop                         ; no operation
-    LDR     R6, =GPIO_D_SET     ; get address of the GPIO data set register
-    LDR     R7, =GPIO_D_CLR     ; get address of the GPIO data clear register
-    MOV     R0, #0x01           ; load mask 0b0001
-    MOV     R1, #0x02           ; load mask 0b0010
-    MOV     R2, #0x40           ; load mask 0b0100
-    MOV     R3, #0x80           ; load mask 0b1000
+   BL initITSboard        ; needed by the board to setup
+    nop                    ; no operation
+
+    LDR R6, =GPIO_D_SET    ; get address of the GPIO data set register
+    LDR R7, =GPIO_D_CLR    ; get address of the GPIO data clear register
+
+    ; MOV R0, #0xC3        ; alle LEDs
+    MOV R0, #0x03          ; LED D08 und D09
+
+    ; MOV R0, #0x01        ; load mask 0b0001
+    ; MOV R1, #0x02        ; load mask 0b0010
+    ; MOV R2, #0x40        ; load mask 0b0100
+    ; MOV R3, #0x80        ; load mask 0b1000
 
     ; Set LED
-   ; STRB    R2, [R6]    ; switch on LED D14 (alle richtig kommentiert)
-   ; STRB    R3, [R6]    ; switch on LED D15
-   ;STRB    R0, [R6]    ; switch on LED D08
-   ; STRB    R0, [R7]    ; switch off LED D08
-    STRB    R0, [R6]    ; switch on LED D08
-    STRB    R1, [R6]    ; switch on LED D09
-   ;STRB    R2, [R7]    ; switch off LED D14
-   ;STRB    R3, [R7]    ; switch off LED D15
+    ; STRB R2, [R6]        ; switch on LED D14 (alle Kommentare sind richtig)
+    ; STRB R3, [R6]        ; switch on LED D15
+    ; STRB R0, [R6]        ; switch on LED D08
+    ; STRB R0, [R7]        ; switch off all LEDs
+    ; STRB R0, [R6]        ; switch on all LEDs
+
+      STRB R0, [R7]          ; switch off LED D08 and D09
+      STRB R0, [R6]          ; switch on LED D08 and D09
+
+    ; STRB R1, [R6]        ; switch on LED D09
+    ; STRB R2, [R7]        ; switch off LED D14
+    ; STRB R3, [R7]        ; switch off LED D15
     b .
-    
-    ALIGN
-    END
+
+ALIGN
+END
