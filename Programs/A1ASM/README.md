@@ -4,3 +4,4 @@
 # Theoretisch müsste es mit den Binärzahlen gehen, von 0 angefangen und dann in Hex
 # Allgemein sind alle geschriebenen Funktione Kommentare richtig (on und off)
 # Ich bin mir unsicher, wo ich die Binärzahlen/Hexzahlen eintragen muss
+# Alles auskommentiert außer 2 Zeilen
